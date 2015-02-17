@@ -6,6 +6,7 @@ gutil = require('gulp-util')
 coffee = require('gulp-coffee')
 plumber = require('gulp-plumber')
 eslint = require('gulp-eslint')
+exec = require('child_process').exec
 
 source = {
   coffee: './src/*.coffee'
@@ -29,9 +30,20 @@ gulp.task('lint', ->
     .pipe( eslint.format() )
 )
 
+gulp.task('test', (cb) ->
+  exec(
+    './node_modules/.bin/mocha --compilers coffee:coffee-script/register --reporter tap'
+    (err, stdout, stderr) ->
+      console.log(stdout)
+      console.log(stderr)
+      cb(err)
+  )
+)
+
 gulp.task('watch', ->
   gulp.watch(source.coffee, ['coffee'])
   gulp.watch(source.js, ['lint'])
+  gulp.watch(source.js, ['test'])
 )
 
 gulp.task('default', ['coffee', 'watch'])
