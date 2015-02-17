@@ -3,6 +3,9 @@
     node: true
     jasmine: true
   rules:
+    no-wrap-func: false
+    no-underscore-dangle: false
+    quotes: false
     no-plusplus: true
     max-params:
       - 1
