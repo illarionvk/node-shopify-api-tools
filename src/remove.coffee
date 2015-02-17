@@ -14,7 +14,7 @@ winston = require('winston')
 logger = new winston.Logger(
   transports: [
     new winston.transports.File(
-      filename: './api-delete.log'
+      filename: './api-remove.log'
       maxsize: 5242880
       maxFiles: 5
     )
