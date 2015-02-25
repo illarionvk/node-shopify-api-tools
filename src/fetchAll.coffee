@@ -1,12 +1,11 @@
 "use strict"
 
-fs = require('fs')
 request = require('request')
 _ = require('lodash')
 async = require('async')
 Rsvp = require('rsvp')
 
-appendItems = (body, info) ->
+appendItems = (body) ->
   parsedBody = JSON.parse(body)
   wrapKey = _.first( _.keys(parsedBody) )
   return parsedBody[wrapKey]
@@ -49,13 +48,7 @@ getItems = (params, totalPages) ->
 
             setTimeout(
               ->
-                asyncResult = appendItems(
-                  body
-                  {
-                    pageNumber: pageNumber
-                    totalPages: totalPages
-                  }
-                )
+                asyncResult = appendItems(body)
                 callback(null, asyncResult)
               throttleDelay
             )
