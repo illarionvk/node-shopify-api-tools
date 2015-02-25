@@ -99,7 +99,7 @@ getPageCount = (params) ->
 
 module.exports = (options) ->
   promise = new Rsvp.Promise( (resolve, reject) ->
-    params = {
+    defaults = {
       baseURL:
         [
           'https://'
@@ -109,37 +109,33 @@ module.exports = (options) ->
           '@'
           options.apiConfig.shop
         ].join('')
-      qs: options.qs || {}
-      what: options.what
-        .replace(/^\//gi, '')
-        .replace(/\/$/gi, '')
-        .toLowerCase()
+      what: 'products'
+      qs:
+        limit: 250
     }
-    params.qs.limit = do ->
-      if options.qs?
-        return options.qs.limit || 250
-      else
-        return 250
+
+    params = _.assign(defaults, options, (value, other, key) ->
+      if _.isPlainObject(value)
+        return _.defaults(value, other)
+      return value
+    )
 
     console.log "Fetching #{params.what} from #{options.apiConfig.shop}"
 
     getPageCount(params)
-      .then(
-        (totalPages) ->
-          if totalPages == 0
-            return []
-          else
-            return getItems(params, totalPages)
-        (error) ->
-          console.log "Error!"
-          console.log error
-          reject(error)
+      .then( (totalPages) ->
+        if totalPages == 0
+          return []
+        else
+          return getItems(params, totalPages)
       )
-      .then(
-        (allPages) ->
-          resolve(allPages)
-        (error) ->
-          reject(error)
+      .then( (allPages) ->
+        resolve(allPages)
+      )
+      .catch( (error) ->
+        console.log "Error!"
+        console.log error
+        reject(error)
       )
   )
   return promise
