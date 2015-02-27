@@ -30,13 +30,8 @@ module.exports = (config, requestObjects) ->
       baseURL = "https://#{config.apiKey}:#{config.password}@#{config.shop}"
       itemType = _.first( _.keys(item) )
       endpoints = {
-        #product: "products/#{item.product?.id}"
+        redirect: "redirects"
         image: "products/#{item.image?.product_id}/images"
-        #article: "blogs/#{item.article?.blog_id}/articles/#{item.article?.id}"
-        #blog: "blogs/#{item.blog?.id}"
-        #page: "pages/#{item.page?.id}"
-        #custom_collection: "custom_collections/#{item.custom_collection?.id}"
-        #smart_collection: "smart_collections/#{item.smart_collection?.id}"
         collect: "collects"
         close_order: "orders/#{item.close_order?.id}/close"
         complete_fulfillment: "orders/#{item.complete_fulfillment?.order_id}/fulfillments/#{item.complete_fulfillment?.id}/complete"

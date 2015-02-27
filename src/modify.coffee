@@ -30,16 +30,18 @@ module.exports = (config, requestObjects) ->
       baseURL = "https://#{config.apiKey}:#{config.password}@#{config.shop}"
       itemType = _.first( _.keys(item) )
       endpoints = {
-        product: "products/#{item.product?.id}"
-        order: "orders/#{item.order?.id}"
-        image: "products/#{item.image?.product_id}/images/#{item.image?.id}"
         article: "blogs/#{item.article?.blog_id}/articles/#{item.article?.id}"
+        asset: "themes/#{item.asset?.theme_id}/assets"
         blog: "blogs/#{item.blog?.id}"
-        page: "pages/#{item.page?.id}"
         custom_collection: "custom_collections/#{item.custom_collection?.id}"
-        smart_collection: "smart_collections/#{item.smart_collection?.id}"
-        metafield: "metafields/#{item.metafield?.id}"
         fulfillment: "orders/#{item.fulfillment?.order_id}/fulfillments/#{item.fulfillment?.id}"
+        image: "products/#{item.image?.product_id}/images/#{item.image?.id}"
+        metafield: "metafields/#{item.metafield?.id}"
+        order: "orders/#{item.order?.id}"
+        page: "pages/#{item.page?.id}"
+        product: "products/#{item.product?.id}"
+        redirect: "redirects/#{item.redirect?.id}"
+        smart_collection: "smart_collections/#{item.smart_collection?.id}"
       }
       path = do ->
         return "/admin/#{endpoints[itemType]}.json"
