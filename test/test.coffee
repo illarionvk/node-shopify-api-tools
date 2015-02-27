@@ -12,7 +12,11 @@ chai.use(chaiAsPromised)
 describe('#fetchAll', ->
 
   it('should get two pages', ->
-    product_count = nock('https://myshop.myshopify.com')
+    scope = nock('https://myshop.myshopify.com')
+      .defaultReplyHeaders({
+        'X-shopify-shop-api-call-limit': '1/40'
+        'Content-Type': 'application/json'
+      })
       .get('/admin/products/count.json?limit=250')
       .reply(
         200
@@ -20,8 +24,6 @@ describe('#fetchAll', ->
           "count": 300
         }
       )
-
-    products_page1 = nock('https://myshop.myshopify.com')
       .get('/admin/products.json?limit=250&page=1')
       .reply(
         200
@@ -36,8 +38,6 @@ describe('#fetchAll', ->
           ]
         }
       )
-
-    products_page2 = nock('https://myshop.myshopify.com')
       .get('/admin/products.json?limit=250&page=2')
       .reply(
         200
