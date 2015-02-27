@@ -42,7 +42,9 @@ module.exports = (options) ->
           return reject(res.statusCode)
 
         results = JSON.parse(body)
-        resolve( results[params.what] )
+        resultKey = _.last( params.what.split('/') )
+
+        resolve( results[resultKey] )
     )
   )
   return promise
