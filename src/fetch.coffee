@@ -21,11 +21,7 @@ module.exports = (options) ->
         limit: 250
     }
 
-    params = _.assign(defaults, options, (value, other) ->
-      if _.isPlainObject(value)
-        return _.defaults(value, other)
-      return value
-    )
+    params = _.merge(defaults, options)
 
     console.log "Fetching #{params.what} from #{options.apiConfig.shop}"
 
