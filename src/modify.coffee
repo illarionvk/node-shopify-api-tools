@@ -4,7 +4,6 @@
 # UPDATE EXISTING PRODUCTS
 ###
 
-fs = require('fs')
 request = require('request')
 async = require('async')
 _ = require('lodash')

@@ -4,7 +4,6 @@
 # SHOPIFY API: Create new items
 ###
 
-fs = require('fs')
 request = require('request')
 async = require('async')
 _ = require('lodash')
@@ -30,13 +29,14 @@ module.exports = (config, requestObjects) ->
       baseURL = "https://#{config.apiKey}:#{config.password}@#{config.shop}"
       itemType = _.first( _.keys(item) )
       endpoints = {
-        product: 'products'
-        redirect: "redirects"
-        image: "products/#{item.image?.product_id}/images"
-        collect: "collects"
-        close_order: "orders/#{item.close_order?.id}/close"
-        complete_fulfillment: "orders/#{item.complete_fulfillment?.order_id}/fulfillments/#{item.complete_fulfillment?.id}/complete"
-        metafield: do ->
+        'order': 'orders'
+        'product': 'products'
+        'redirect': "redirects"
+        'image': "products/#{item.image?.product_id}/images"
+        'collect': "collects"
+        'close_order': "orders/#{item.close_order?.id}/close"
+        'complete_fulfillment': "orders/#{item.complete_fulfillment?.order_id}/fulfillments/#{item.complete_fulfillment?.id}/complete"
+        'metafield': do ->
           metafield = item.metafield
           if metafield?
             resource = metafield.owner_resource
