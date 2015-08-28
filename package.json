@@ -1,6 +1,6 @@
 {
   "name": "shopify-api-tools",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Shopify private apps tools",
   "main": "index.js",
   "scripts": {
