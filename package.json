@@ -23,8 +23,10 @@
     "async": "~0.9.0",
     "bluebird": "~3.3.1",
     "lodash": "~3.3.1",
+    "oibackoff": "~1.0.0",
     "request": "~2.53.0",
     "rsvp": "3.0.14",
+    "superagent": "~1.7.2",
     "winston": "~0.9.0"
   },
   "devDependencies": {
