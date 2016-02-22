@@ -7,7 +7,7 @@ backoff = require('oibackoff').backoff({
   algorithm: 'exponential'
   delayRatio: 2
   maxTries: 5
-  maxDelay: 10
+  maxDelay: 32
 })
 
 intermediate = (err, tries, delay) ->
