@@ -1,51 +1,65 @@
 'use strict'
 
-request = require('request')
+superagent = require('superagent')
 _ = require('lodash')
-Rsvp = require('rsvp')
+Promise = require('bluebird')
+backoff = require('oibackoff').backoff({
+  algorithm: 'exponential'
+  delayRatio: 2
+  maxTries: 5
+  maxDelay: 32
+})
+
+intermediate = (err, tries, delay) ->
+  console.log("Trying again after #{delay} seconds")
+  return
+
+request = (data, callback) ->
+  return superagent
+    .get(data.uri)
+    .query(data.qs)
+    .end(callback)
 
 module.exports = (options) ->
-  promise = new Rsvp.Promise( (resolve, reject) ->
-    defaults = {
-      baseURL:
-        [
-          'https://'
-          options.apiConfig.apiKey
-          ':'
-          options.apiConfig.password
-          '@'
-          options.apiConfig.shop
-        ].join('')
-      what: 'themes'
-      qs:
-        limit: 250
+  return new Promise( (resolve, reject) ->
+    what = do ->
+      if _.has(options, 'what')
+        return options.what
+      return ''
+
+    resultKey = _.last( what.split('/') )
+
+    data = {
+      method: 'GET'
+      uri: [
+        'https://'
+        options.apiConfig.apiKey
+        ':'
+        options.apiConfig.password
+        '@'
+        options.apiConfig.shop
+        '/admin/'
+        what
+        '.json'
+      ].join('')
+      what: what
+      qs: _.merge({ limit: 250 }, options.qs)
     }
 
-    params = _.merge(defaults, options)
+    console.log "Fetching #{what} from #{options.apiConfig.shop}"
 
-    console.log "Fetching #{params.what} from #{options.apiConfig.shop}"
+    backoff(request, data, intermediate, (err, res) ->
+      if err?
+        console.log('Error!')
+        console.dir(err)
+        return reject(err)
 
-    request(
-      {
-        method: 'GET'
-        uri: params.baseURL + "/admin/#{params.what}.json"
-        qs: params.qs
-      }
-      (err, res, body) ->
-        if err?
-          console.log('Error!')
-          console.dir(err)
-          return reject(err)
+      console.log [
+        'API limit:'
+        res.headers['x-shopify-shop-api-call-limit']
+      ].join(' ')
 
-        unless res.statusCode == 200
-          console.log "ERROR #{res.statusCode}"
-          return reject(res.statusCode)
-
-        results = JSON.parse(body)
-        resultKey = _.last( params.what.split('/') )
-
-        resolve( results[resultKey] )
+      return resolve( res.body[resultKey] )
     )
   )
-  return promise
 

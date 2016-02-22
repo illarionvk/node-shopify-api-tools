@@ -4,7 +4,7 @@
   "description": "Shopify private apps tools",
   "main": "index.js",
   "scripts": {
-    "test": "make test"
+    "watch": "gulp"
   },
   "author": "illarionvk",
   "license": "MIT",
@@ -21,21 +21,33 @@
   },
   "dependencies": {
     "async": "~0.9.0",
+    "bluebird": "~3.3.1",
     "lodash": "~3.3.1",
+    "oibackoff": "~1.0.0",
     "request": "~2.53.0",
     "rsvp": "3.0.14",
+    "superagent": "~1.7.2",
     "winston": "~0.9.0"
   },
   "devDependencies": {
     "chai": "~2.0.0",
-    "chai-as-promised": "^4.2.0",
-    "coffee-script": "~1.9.1",
+    "chai-as-promised": "~4.2.0",
+    "coffee-script": "~1.10.0",
     "gulp": "~3.8.11",
-    "gulp-coffee": "^2.3.1",
-    "gulp-eslint": "~0.4.2",
-    "gulp-plumber": "~0.6.6",
-    "gulp-util": "~3.0.3",
+    "gulp-coffee": "~2.3.1",
+    "gulp-eslint": "~1.1.1",
+    "gulp-plumber": "~1.1.0",
+    "gulp-util": "~3.0.7",
     "mocha": "~2.1.0",
     "nock": "~0.59.1"
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+      "no-console": 0
+    }
   }
 }

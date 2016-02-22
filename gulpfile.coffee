@@ -43,7 +43,7 @@ gulp.task('test', (cb) ->
 gulp.task('watch', ->
   gulp.watch(source.coffee, ['coffee'])
   gulp.watch(source.js, ['lint'])
-  gulp.watch(source.js, ['test'])
+  # gulp.watch(source.js, ['test'])
 )
 
 gulp.task('default', ['coffee', 'watch'])

@@ -4,7 +4,6 @@
 # SHOPIFY API: Delete existing
 ###
 
-fs = require('fs')
 request = require('request')
 async = require('async')
 _ = require('lodash')
@@ -48,7 +47,7 @@ module.exports = (config, requestObjects) ->
           uri: baseURL+path
           json: item
         }
-        (err, res, body) ->
+        (err, res) ->
           logger.info "DELETE #{path}"
           logger.info item
 
