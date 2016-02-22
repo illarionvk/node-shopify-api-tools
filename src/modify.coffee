@@ -51,7 +51,7 @@ module.exports = (config, requestObjects) ->
           uri: baseURL+path
           json: item
         }
-        (err, res, body) ->
+        (err, res) ->
           logger.info "PUT #{path}"
 
           if err?
