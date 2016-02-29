@@ -32,6 +32,7 @@ module.exports = (config, requestObjects) ->
         product: "products/#{item.product?.id}"
         image: "products/#{item.image?.product_id}/images/#{item.image?.id}"
         collect: "collects/#{item.collect?.id}"
+        metafield: "metafields/#{item.metafield?.id}"
         #article: "blogs/#{item.article?.blog_id}/articles/#{item.article?.id}"
         #blog: "blogs/#{item.blog?.id}"
         #page: "pages/#{item.page?.id}"
