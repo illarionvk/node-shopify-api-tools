@@ -30,6 +30,7 @@ module.exports = (config, requestObjects) ->
       itemType = _.first( _.keys(item) )
       endpoints = {
         'order': 'orders'
+        'page': 'pages'
         'product': 'products'
         'redirect': "redirects"
         'image': "products/#{item.image?.product_id}/images"
