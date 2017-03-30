@@ -46,6 +46,7 @@ module.exports = (config, requestObjects) ->
             if resource == 'product'
               return "products/#{metafield.owner_id}/metafields"
             callback('Unknown metafield owner resource')
+        'article': "blogs/#{item.blog_id}/articles"
       }
       path = do ->
         return "/admin/#{endpoints[itemType]}.json"
